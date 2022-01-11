@@ -6,6 +6,7 @@ import {
   addDoc,
   deleteDoc,
   doc,
+  serverTimestamp,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -40,6 +41,11 @@ export const colRef = collection(db, "lists");
 //     console.log(err.message);
 //   });
 
+const getAllDocs = async () => {
+  const docs = getDocs(colRef);
+  docs.forEach((doc) => {});
+};
+
 const querySnapshot = async () => {
   try {
     const collectionDocs = await getDocs(colRef);
@@ -59,6 +65,7 @@ export const addList = async (name, items) => {
     await addDoc(colRef, {
       name,
       items,
+      createdAt: serverTimestamp(),
     });
   } catch (error) {
     console.log(error);
@@ -77,3 +84,4 @@ export const deleteList = async (id) => {
 
 // useEffect(() => { const unsubscribe = onSnapshot(collection(db, COLLECTION_NAME), (snapshot) => {
 // Firestore requires that you loop through the snapshot to access the docs, // instead of just setting the snapshot as the value of the state const snapshotDocs = [] snapshot.forEach(doc => snapshotDocs.push(doc)) setDocs(snapshotDocs) }) return () => { // Used to remove the snapshot listener when the component is unmounted unsubscribe(); } }, [])
+// collection ref

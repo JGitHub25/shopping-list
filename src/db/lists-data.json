@@ -1,0 +1,18 @@
+[
+  { "name": "monica", "items": ["yucca", "rice"] },
+  { "name": "beatriz", "items": ["bread", "pizza", "nuggets"] },
+  { "name": "pacho", "items": ["yoghurt", "milk", "ceviche"] },
+  { "name": "jorge", "items": ["tomatoes"] },
+  { "name": "olga", "items": ["pineapple", "sugar", "watermelon", "berries"] },
+  { "name": "pía", "items": ["cantaloupe", "vinegar"] },
+  { "name": "johnatan", "items": ["rice", "apples", "oil", "lettuce"] },
+  { "name": "carlos", "items": ["tomatoes", "nuggets", "rice"] },
+  { "name": "david", "items": ["ceviche"] },
+  { "name": "camilo", "items": ["sugar", "watermelon", "pizza"] },
+  { "name": "kathy", "items": ["milk", "ceviche", "pineapple", "vinegar"] },
+  { "name": "eliana", "items": ["nuggets", "rice", "yoghurt", "milk", "oil"] },
+  { "name": "luis", "items": ["watermelon", "pizza", "bread", "nuggets"] },
+  { "name": "eliseo", "items": ["apples", "oil", "cantaloupe", "tangerines"] },
+  { "name": "félix", "items": ["pineapple", "vinegar"] },
+  { "name": "augusto", "items": ["peppers"] }
+]

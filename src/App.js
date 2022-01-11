@@ -1,23 +1,30 @@
 import { useState, useEffect } from "react";
 import { addList, deleteList, colRef } from "./lib/firebase";
 import { onSnapshot } from "firebase/firestore";
+import { populateDB, deleteAll } from "./db/populate-firestore";
 
 function App() {
   const [list, setList] = useState("");
   const [item, setItem] = useState("");
   const [id, setId] = useState("");
-  const [docs, setDocs] = useState(["a", "b"]);
+  const [docs, setDocs] = useState();
 
   const getAllDocs = async (id) => {
     try {
       const unsubscribe = onSnapshot(colRef, (snapshot) => {
         const snapshotDocs = [];
-        snapshot.forEach((doc) => snapshotDocs.push(doc.data()));
+        snapshot.forEach((doc, index) => {
+          snapshotDocs.push({ ...doc.data(), id: doc.id });
+        });
+        snapshot.forEach((doc) => {
+          console.log(doc.id);
+        });
         setDocs(snapshotDocs);
         console.log(snapshotDocs);
-        return () => {
-          unsubscribe();
-        };
+        // return () => {
+        //   unsubscribe();
+        //   console.log("unsubscribed");
+        // };
       });
     } catch (error) {
       console.log(error);
@@ -55,42 +62,90 @@ function App() {
   return (
     <main className="main-container">
       <h2 className="title">grocery bud</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="form-control">
-          <label htmlFor="list-name">List name</label>
-          <input
-            type="text"
-            placeholder="e.g. maria's list"
-            value={list}
-            onChange={handleListChange}
-            name="list-name"
-          />
-          <label htmlFor="items">Items</label>
-          <input
-            type="text"
-            placeholder="e.g. broccoli"
-            value={item}
-            onChange={handleItemsChange}
-            name="items"
-          />
-          <button type="submit" className="submit-btn">
-            submit
-          </button>
+      <div className="info-container">
+        <div className="forms-container">
+          <form onSubmit={handleSubmit}>
+            <fieldset>
+              <legend>Add list & item</legend>
+              <label htmlFor="list-name">List name</label>
+              <br />
+              <input
+                type="text"
+                placeholder="e.g. maria's list"
+                value={list}
+                onChange={handleListChange}
+                name="list-name"
+              />
+              <br />
+              <label htmlFor="items">Items</label>
+              <br />
+              <input
+                type="text"
+                placeholder="e.g. broccoli"
+                value={item}
+                onChange={handleItemsChange}
+                name="items"
+              />
+              <br />
+              <button type="submit" className="submit-btn">
+                submit
+              </button>
+            </fieldset>
+          </form>
+          <form onSubmit={deleteItem}>
+            <fieldset>
+              <legend>Delete list by ID</legend>
+              <label htmlFor="id">ID</label>
+              <br />
+              <input
+                type="text"
+                value={id}
+                onChange={handleIDChange}
+                name="id"
+              />
+              <br />
+              <button type="submit" className="submit-btn">
+                submit
+              </button>
+            </fieldset>
+          </form>
         </div>
-      </form>
-      <form onSubmit={deleteItem}>
-        <label htmlFor="id">ID</label>
-        <input type="text" value={id} onChange={handleIDChange} name="id" />
-        <button type="submit" className="submit-btn">
-          submit
-        </button>
-      </form>
-      <article>list</article>
-      <div>
-        {docs.map((doc, index) => {
-          return <div key={index}>{doc.name}</div>;
-        })}
+        <article className="list-container">
+          {docs &&
+            docs.map((doc) => {
+              const { name, items, id } = doc;
+              return (
+                <div key={id} className="list-item">
+                  <p className="list-title">{name}</p>
+                  <ul className="list-items">
+                    {items.map((item, index) => {
+                      return <li key={index}>{item}</li>;
+                    })}
+                  </ul>
+                  <div className="btn-container">
+                    <button
+                      className="delete-btn"
+                      type="button"
+                      onClick={() => {
+                        setId(id);
+                        deleteList(id);
+                        setId("");
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+        </article>
       </div>
+      <button className="populate-btn" onClick={populateDB}>
+        populate
+      </button>
+      <button className="delete-all-btn" onClick={deleteAll}>
+        delete all
+      </button>
     </main>
   );
 }

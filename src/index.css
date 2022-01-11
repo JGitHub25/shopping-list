@@ -5,22 +5,49 @@
 
 body {
   display: flex;
-  align-items: center;
-  flex-direction: column;
+  /* align-items: center; */
+  /* flex-direction: column; */
   justify-content: center;
-  height: 100vh;
+  /* height: 100vh; */
 }
 
 .main-container {
   display: flex;
   align-items: center;
   flex-direction: column;
-  width: 40vw;
+  width: 70vw;
   background-color: tomato;
-  height: 80vh;
   padding: 40px 20px;
+  margin-top: 50px;
 }
 
 .title {
   text-transform: capitalize;
+}
+
+.info-container {
+  width: 100%;
+  display: flex;
+}
+
+.forms-container {
+  background-color: blue;
+  width: 50%;
+}
+
+.list-container {
+  background-color: crimson;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: aliceblue;
+  padding: 10px 5px;
+  border-radius: 5px;
 }
