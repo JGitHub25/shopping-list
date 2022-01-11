@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { addList, deleteList, getAllDocs, colRef } from "./lib/firebase";
+import { addList, deleteList, colRef } from "./lib/firebase";
 import { onSnapshot } from "firebase/firestore";
 
 function App() {
