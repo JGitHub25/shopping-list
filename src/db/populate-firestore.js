@@ -28,8 +28,8 @@ const db = getFirestore();
 // collection ref
 const colRef = collection(db, "lists");
 
-const addList = async (item) => {
-  const { name, items } = item;
+const addList = async (data) => {
+  const { name, items } = data;
   try {
     await addDoc(colRef, {
       name,

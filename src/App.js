@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { addList, deleteList, colRef } from "./lib/firebase";
+import { addList, deleteList, colRef, updateList } from "./lib/firebase";
 import { onSnapshot } from "firebase/firestore";
 import { populateDB, deleteAll } from "./db/populate-firestore";
 
@@ -7,6 +7,8 @@ function App() {
   const [list, setList] = useState("");
   const [item, setItem] = useState("");
   const [id, setId] = useState("");
+  const [updateId, setUpdateId] = useState("");
+  const [name, setName] = useState("");
   const [docs, setDocs] = useState();
 
   const getAllDocs = async (id) => {
@@ -46,6 +48,14 @@ function App() {
     setId(e.target.value);
   };
 
+  const handleUpdateIDChange = (e) => {
+    setUpdateId(e.target.value);
+  };
+
+  const handleNameChange = (e) => {
+    setName(e.target.value);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     addList(list, item);
@@ -59,6 +69,12 @@ function App() {
     setId("");
   };
 
+  const updateItem = (e) => {
+    e.preventDefault();
+    updateList(updateId, name);
+    console.log("updated");
+  };
+
   return (
     <main className="main-container">
       <h2 className="title">grocery bud</h2>
@@ -66,7 +82,9 @@ function App() {
         <div className="forms-container">
           <form onSubmit={handleSubmit}>
             <fieldset>
-              <legend>Add list & item</legend>
+              <legend>
+                Add list & items <small>(separated by a whitespace)</small>
+              </legend>
               <label htmlFor="list-name">List name</label>
               <br />
               <input
@@ -102,6 +120,32 @@ function App() {
                 value={id}
                 onChange={handleIDChange}
                 name="id"
+              />
+              <br />
+              <button type="submit" className="submit-btn">
+                submit
+              </button>
+            </fieldset>
+          </form>
+          <form onSubmit={updateItem}>
+            <fieldset>
+              <legend>Update list by ID</legend>
+              <label htmlFor="id">ID</label>
+              <br />
+              <input
+                type="text"
+                value={updateId}
+                onChange={handleUpdateIDChange}
+                name="id"
+              />
+              <br />
+              <label htmlFor="name ">Name</label>
+              <br />
+              <input
+                type="text"
+                value={name}
+                onChange={handleNameChange}
+                name="name"
               />
               <br />
               <button type="submit" className="submit-btn">
