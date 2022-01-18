@@ -1,18 +1,124 @@
 [
-  { "name": "monica", "items": ["yucca", "rice"] },
-  { "name": "beatriz", "items": ["bread", "pizza", "nuggets"] },
-  { "name": "pacho", "items": ["yoghurt", "milk", "ceviche"] },
-  { "name": "jorge", "items": ["tomatoes"] },
-  { "name": "olga", "items": ["pineapple", "sugar", "watermelon", "berries"] },
-  { "name": "pía", "items": ["cantaloupe", "vinegar"] },
-  { "name": "johnatan", "items": ["rice", "apples", "oil", "lettuce"] },
-  { "name": "carlos", "items": ["tomatoes", "nuggets", "rice"] },
-  { "name": "david", "items": ["ceviche"] },
-  { "name": "camilo", "items": ["sugar", "watermelon", "pizza"] },
-  { "name": "kathy", "items": ["milk", "ceviche", "pineapple", "vinegar"] },
-  { "name": "eliana", "items": ["nuggets", "rice", "yoghurt", "milk", "oil"] },
-  { "name": "luis", "items": ["watermelon", "pizza", "bread", "nuggets"] },
-  { "name": "eliseo", "items": ["apples", "oil", "cantaloupe", "tangerines"] },
-  { "name": "félix", "items": ["pineapple", "vinegar"] },
-  { "name": "augusto", "items": ["peppers"] }
+  {
+    "name": "monica",
+    "items": [
+      { "name": "yucca", "lastPurch": null, "howSoon": "soon" },
+      { "name": "rice", "lastPurch": null, "howSoon": "not soon" }
+    ]
+  },
+  {
+    "name": "beatriz",
+    "items": [
+      { "name": "bread", "lastPurch": null, "howSoon": "kind of soon" },
+      { "name": "pizza", "lastPurch": null, "howSoon": "soon" },
+      { "name": "nuggets", "lastPurch": null, "howSoon": "kind of soon" }
+    ]
+  },
+  {
+    "name": "pacho",
+    "items": [
+      { "name": "yoghurt", "lastPurch": null, "howSoon": "not soon" },
+      { "name": "milk", "lastPurch": null, "howSoon": "kind of soon" },
+      { "name": "ceviche", "lastPurch": null, "howSoon": "soon" }
+    ]
+  },
+  {
+    "name": "jorge",
+    "items": [
+      { "name": "tomatoes", "lastPurch": null, "howSoon": "kind of soon" }
+    ]
+  },
+  {
+    "name": "olga",
+    "items": [
+      { "name": "pineapple", "lastPurch": null, "howSoon": "kind of soon" },
+      { "name": "sugar", "lastPurch": null, "howSoon": "not soon" },
+      { "name": "watermelon", "lastPurch": null, "howSoon": "kind of soon" },
+      { "name": "berries", "lastPurch": null, "howSoon": "soon" }
+    ]
+  },
+  {
+    "name": "pía",
+    "items": [
+      { "name": "cantaloupe", "lastPurch": null, "howSoon": "soon" },
+      { "name": "vinegar", "lastPurch": null, "howSoon": "kind of soon" }
+    ]
+  },
+  {
+    "name": "johnatan",
+    "items": [
+      { "name": "rice", "lastPurch": null, "howSoon": "not soon" },
+      { "name": "apples", "lastPurch": null, "howSoon": "kind of soon" },
+      { "name": "oil", "lastPurch": null, "howSoon": "not soon" },
+      { "name": "lettuce", "lastPurch": null, "howSoon": "soon" }
+    ]
+  },
+  {
+    "name": "carlos",
+    "items": [
+      { "name": "tomatoes", "lastPurch": null, "howSoon": "kind of soon" },
+      { "name": "nuggets", "lastPurch": null, "howSoon": "kind of soon" },
+      { "name": "rice", "lastPurch": null, "howSoon": "not soon" }
+    ]
+  },
+  {
+    "name": "david",
+    "items": [{ "name": "ceviche", "lastPurch": null, "howSoon": "soon" }]
+  },
+  {
+    "name": "camilo",
+    "items": [
+      { "name": "sugar", "lastPurch": null, "howSoon": "not soon" },
+      { "name": "watermelon", "lastPurch": null, "howSoon": "kind of soon" },
+      { "name": "pizza", "lastPurch": null, "howSoon": "soon" }
+    ]
+  },
+  {
+    "name": "kathy",
+    "items": [
+      { "name": "milk", "lastPurch": null, "howSoon": "kind of soon" },
+      { "name": "ceviche", "lastPurch": null, "howSoon": "soon" },
+      { "name": "pineapple", "lastPurch": null, "howSoon": "kind of soon" },
+      { "name": "vinegar", "lastPurch": null, "howSoon": "kind of soon" }
+    ]
+  },
+  {
+    "name": "eliana",
+    "items": [
+      { "name": "nuggets", "lastPurch": null, "howSoon": "kind of soon" },
+      { "name": "rice", "lastPurch": null, "howSoon": "not soon" },
+      { "name": "yoghurt", "lastPurch": null, "howSoon": "not soon" },
+      { "name": "milk", "lastPurch": null, "howSoon": "kind of soon" },
+      { "name": "oil", "lastPurch": null, "howSoon": "not soon" }
+    ]
+  },
+  {
+    "name": "luis",
+    "items": [
+      { "name": "watermelon", "lastPurch": null, "howSoon": "kind of soon" },
+      { "name": "pizza", "lastPurch": null, "howSoon": "soon" },
+      { "name": "bread", "lastPurch": null, "howSoon": "kind of soon" },
+      { "name": "nuggets", "lastPurch": null, "howSoon": "kind of soon" }
+    ]
+  },
+  {
+    "name": "eliseo",
+    "items": [
+      { "name": "apples", "lastPurch": null, "howSoon": "kind of soon" },
+      { "name": "oil", "lastPurch": null, "howSoon": "not soon" },
+      { "name": "cantaloupe", "lastPurch": null, "howSoon": "soon" },
+      { "name": "tangerines", "lastPurch": null, "howSoon": "soon" }
+    ]
+  },
+  {
+    "name": "félix",
+    "items": [
+      { "name": "pineapple", "lastPurch": null, "howSoon": "kind of soon" },
+      { "name": "vinegar", "lastPurch": null, "howSoon": "kind of soon" }
+    ]
+  },
+  {
+    "name": "augusto",
+    "items": [{ "name": "peppers", "lastPurch": null, "howSoon": "soon" }]
+  }
 ]
