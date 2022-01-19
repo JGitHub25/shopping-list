@@ -1,16 +1,17 @@
-import { useState, useEffect } from "react";
-import { addList, deleteDocById, colRef, updateList } from "./lib/firebase";
+import { useState, useEffect, useRef } from "react";
+import { addList, deleteDocById, colRef, AddToListById } from "./lib/firebase";
 import { onSnapshot } from "firebase/firestore";
 import { populateDB, deleteAll } from "./db/populate-firestore";
 
 function App() {
-  const [docs, setDocs] = useState([]);
+  // const [dbLists, setDbLists] = useState([]);
+  const allDocsRef = useRef([]);
   const [inputs, setInputs] = useState({
-    items: "",
+    items: [],
+    itemsForNewList: "",
     list: "",
     product: "",
-    deleteId: "",
-    updateId: "",
+    id: "",
   });
 
   useEffect(() => {
@@ -22,7 +23,8 @@ function App() {
       snapshot.forEach((doc) => {
         console.log(doc.id);
       });
-      setDocs(snapshotDocs);
+      allDocsRef.current = snapshotDocs;
+      // setDbLists(snapshotDocs);
       console.log(snapshotDocs);
     });
     return () => {
@@ -30,6 +32,24 @@ function App() {
       console.log("unsubscribed");
     };
   }, []);
+
+  const handleSelect = (e) => {
+    const select = e.target;
+    const id = select.options[select.selectedIndex].id;
+    const doc = allDocsRef.current.find((doc) => {
+      return doc.id === id;
+    });
+    const filteredItems = [];
+    doc.items.forEach((item) => {
+      filteredItems.push(item.name);
+    });
+    setInputs((values) => ({
+      ...values,
+      name: select.value,
+      id,
+      items: filteredItems,
+    }));
+  };
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -39,14 +59,14 @@ function App() {
 
   const handleAddListSubmit = (e) => {
     e.preventDefault();
-    addList(inputs.list, inputs.items);
-    setInputs((values) => ({ ...values, list: "", items: "" }));
+    addList(inputs.list, inputs.product);
+    setInputs((values) => ({ ...values, list: "", product: "" }));
   };
 
   const deleteOneList = (e) => {
     e.preventDefault();
-    deleteDocById(inputs.deleteId);
-    setInputs((values) => ({ ...values, deleteId: "" }));
+    deleteDocById(inputs.id);
+    setInputs((values) => ({ ...values, id: "" }));
   };
 
   const deleteThisList = (e) => {
@@ -55,9 +75,10 @@ function App() {
     deleteDocById(id);
   };
 
-  const updateItem = (e) => {
+  const handleAddition = (e) => {
     e.preventDefault();
-    console.log("updated");
+    AddToListById(inputs.id, inputs.product);
+    setInputs((values) => ({ ...values, product: "" }));
   };
 
   return (
@@ -65,32 +86,51 @@ function App() {
       <h2 className="title">grocery bud</h2>
       <div className="info-container">
         <div className="forms-container">
-          <form>
+          <form onSubmit={handleAddition}>
             <fieldset>
               <legend>Choose an existing list</legend>
-              <label htmlFor="userList">Choose your user from the list:</label>
+              <label htmlFor="name">Choose your user from the list:</label>
               <br />
-              <select
-                id="users"
-                onChange={handleChange}
-                name="user"
-                value={inputs.user}
-              >
-                {docs.map((doc) => {
-                  const { id, name } = doc;
-                  return (
-                    <option key={id} id={id} value={name}>
-                      {name}
-                    </option>
-                  );
-                })}
-              </select>
+              {allDocsRef.current === [] ? (
+                <small>There are no lists yet</small>
+              ) : (
+                <select
+                  id="name"
+                  onChange={handleSelect}
+                  name="name"
+                  value={inputs.name}
+                >
+                  {allDocsRef.current.map((doc) => {
+                    const { id, name } = doc;
+                    return (
+                      <option key={id} id={id} value={name}>
+                        {name}
+                      </option>
+                    );
+                  })}
+                </select>
+              )}
+              <fieldset>
+                <legend>Add a product to your list</legend>
+                <label htmlFor="name ">Product</label>
+                <br />
+                <input
+                  type="text"
+                  value={inputs.product}
+                  onChange={handleChange}
+                  name="product"
+                />
+                <br />
+                <button type="submit" className="add-btn">
+                  Add
+                </button>
+              </fieldset>
             </fieldset>
           </form>
           <form onSubmit={handleAddListSubmit}>
             <fieldset>
               <legend>
-                Add list & items <small>(separated by a whitespace)</small>
+                Create list & items <small>(separated by a whitespace)</small>
               </legend>
               <label htmlFor="list-name">List name</label>
               <br />
@@ -102,89 +142,49 @@ function App() {
                 name="list"
               />
               <br />
-              <label htmlFor="items">Items</label>
+              <label htmlFor="items">Items to include</label>
               <br />
               <input
                 type="text"
                 placeholder="e.g. broccoli"
-                value={inputs.items}
+                value={inputs.itemsForNewList}
                 onChange={handleChange}
                 name="items"
               />
               <br />
-              <button type="submit" className="submit-btn">
-                submit
+              <button type="submit" className="create-btn">
+                create
               </button>
             </fieldset>
           </form>
           <form onSubmit={deleteOneList}>
             <fieldset>
-              <legend>Delete list by ID</legend>
-              <label htmlFor="id">ID</label>
-              <br />
-              <input
-                type="text"
-                value={inputs.deleteId}
-                onChange={handleChange}
-                name="deleteId"
-              />
-              <br />
-              <button type="submit" className="submit-btn">
-                submit
-              </button>
-            </fieldset>
-          </form>
-          <form onSubmit={updateItem}>
-            <fieldset>
-              <legend>Update list by ID</legend>
-              <label htmlFor="id">ID</label>
-              <br />
-              <input
-                type="text"
-                value={inputs.updateId}
-                onChange={handleChange}
-                name="updateId"
-              />
-              <br />
-              <label htmlFor="name ">Product</label>
-              <br />
-              <input
-                type="text"
-                value={inputs.product}
-                onChange={handleChange}
-                name="product"
-              />
-              <br />
-              <button type="submit" className="submit-btn">
-                submit
+              <button type="submit" className="delete-btn">
+                delete
               </button>
             </fieldset>
           </form>
         </div>
         <article className="list-container">
-          {docs.map((doc) => {
-            const { name, items, id } = doc;
-            return (
-              <div key={id} id={id} className="list-item">
-                <p className="list-title">{name}</p>
-                <ul className="list-items">
-                  {items.map((item) => {
-                    const { name } = item;
-                    return <li key={`${name}${id}`}>{name}</li>;
-                  })}
-                </ul>
-                <div className="btn-container">
-                  <button
-                    className="delete-btn"
-                    type="button"
-                    onClick={deleteThisList}
-                  >
-                    Delete
-                  </button>
-                </div>
+          {inputs.items === [] ? null : (
+            <div id={inputs.id} className="list-item">
+              <p className="list-title">{inputs.name}</p>
+              <ul className="list-items">
+                {inputs.items.map((item) => {
+                  return <li key={`${item}${inputs.id}`}>{item}</li>;
+                })}
+              </ul>
+              <div className="btn-container">
+                <button
+                  className="delete-btn"
+                  type="button"
+                  onClick={deleteThisList}
+                >
+                  Delete
+                </button>
               </div>
-            );
-          })}
+            </div>
+          )}
         </article>
       </div>
       <button className="populate-btn" onClick={populateDB}>

@@ -7,6 +7,7 @@ import {
   doc,
   serverTimestamp,
   updateDoc,
+  arrayUnion,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -27,15 +28,22 @@ export const db = getFirestore();
 // collection ref
 export const colRef = collection(db, "lists");
 
+const frequencies = ["soon", "kind of soon", "not soon"];
+const randomFrequency = () => {
+  const random = Math.floor(Math.random() * frequencies.length);
+  return frequencies[random];
+};
+
 export const addList = async (name, items) => {
   try {
     const itemsArray = items.split(" ").map((item) => {
       return {
         name: item,
-        howSoon: "soon",
-        lastPurch: new Date(),
+        howSoon: randomFrequency(),
+        lastPurch: new Date().toLocaleString(),
       };
     });
+
     await addDoc(colRef, {
       name,
       items: itemsArray,
@@ -56,10 +64,16 @@ export const deleteDocById = async (id) => {
   }
 };
 
-export const updateList = async (id, name) => {
+export const AddToListById = async (id, product) => {
+  const fullItem = {
+    name: product,
+    howSoon: randomFrequency(),
+    lastPurch: new Date().toLocaleString(),
+  };
+
   try {
     const docRef = doc(colRef, id);
-    await updateDoc(docRef, { name });
+    await updateDoc(docRef, { items: arrayUnion(fullItem) });
     console.log(`document ${id} updated.`);
   } catch (error) {
     console.log(error);
