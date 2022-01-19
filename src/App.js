@@ -4,8 +4,8 @@ import { onSnapshot } from "firebase/firestore";
 import { populateDB, deleteAll } from "./db/populate-firestore";
 
 function App() {
-  // const [dbLists, setDbLists] = useState([]);
-  const allDocsRef = useRef([]);
+  const [dbLists, setDbLists] = useState([]);
+  // const allDocsRef = useRef([]);
   const [inputs, setInputs] = useState({
     items: [],
     itemsForNewList: "",
@@ -23,8 +23,8 @@ function App() {
       snapshot.forEach((doc) => {
         console.log(doc.id);
       });
-      allDocsRef.current = snapshotDocs;
-      // setDbLists(snapshotDocs);
+      // allDocsRef.current = snapshotDocs;
+      setDbLists(snapshotDocs);
       console.log(snapshotDocs);
     });
     return () => {
@@ -36,7 +36,7 @@ function App() {
   const handleSelect = (e) => {
     const select = e.target;
     const id = select.options[select.selectedIndex].id;
-    const doc = allDocsRef.current.find((doc) => {
+    const doc = dbLists.find((doc) => {
       return doc.id === id;
     });
     const filteredItems = [];
@@ -91,7 +91,7 @@ function App() {
               <legend>Choose an existing list</legend>
               <label htmlFor="name">Choose your user from the list:</label>
               <br />
-              {allDocsRef.current === [] ? (
+              {dbLists.length === 0 ? (
                 <small>There are no lists yet</small>
               ) : (
                 <select
@@ -100,7 +100,7 @@ function App() {
                   name="name"
                   value={inputs.name}
                 >
-                  {allDocsRef.current.map((doc) => {
+                  {dbLists.map((doc) => {
                     const { id, name } = doc;
                     return (
                       <option key={id} id={id} value={name}>
