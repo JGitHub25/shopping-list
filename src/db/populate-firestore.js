@@ -6,7 +6,7 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 
-import { colRef } from "../lib/firebase";
+import { colRef } from "./collab-lab";
 const data = require("./lists-data.json");
 
 const getIDs = async () => {

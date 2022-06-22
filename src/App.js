@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { addList, deleteDocById, colRef, AddToListById } from "./lib/firebase";
 import { onSnapshot } from "firebase/firestore";
 import { populateDB, deleteAll } from "./db/populate-firestore";
+import { superPopulate } from "./db/collab-lab";
 
 function App() {
   const [dbLists, setDbLists] = useState([]);
@@ -84,6 +85,7 @@ function App() {
   return (
     <main className="main-container">
       <h2 className="title">grocery bud</h2>
+      <button onClick={superPopulate}></button>
       <div className="info-container">
         <div className="forms-container">
           <form onSubmit={handleAddition}>
